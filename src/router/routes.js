@@ -1,7 +1,3 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { useAuthStore } from "src/stores/authstore";
-import { computed } from "vue";
-
 function AuthTest(to, from, next) {
   if (localStorage.getItem("token")) {
     next();
@@ -32,6 +28,18 @@ const routes = [
         name: "show",
         path: "/show/:id",
         component: () => import("pages/components/ShowComponent.vue"),
+        beforeEnter: AuthTest,
+      },
+      {
+        name: "create",
+        path: "/create",
+        component: () => import("pages/components/CreateComponent.vue"),
+        beforeEnter: AuthTest,
+      },
+      {
+        name: "edit",
+        path: "/edit/:id",
+        component: () => import("pages/components/CreateComponent.vue"),
         beforeEnter: AuthTest,
       },
     ],

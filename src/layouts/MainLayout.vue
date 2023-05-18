@@ -11,10 +11,14 @@
           unchecked-icon="light_mode"
           :color="isActiveDarkMode ? 'black' : 'yellow'"
         ></q-toggle>
-        <q-btn icon="logout" flat @click="useAuthStore().logout(), clearToken() ,router.push('/autentication')">
-          <q-tooltip>
-            Logout
-          </q-tooltip>
+        <q-btn
+          icon="logout"
+          flat
+          @click="
+            useAuthStore().logout(), clearToken(), router.push('/autentication')
+          "
+        >
+          <q-tooltip> Logout </q-tooltip>
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -25,21 +29,29 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { useAuthStore } from "src/stores/authstore";
 import { useRouter } from "vue-router";
 
 const $q = useQuasar();
-const router = useRouter()
+const router = useRouter();
 
-function clearToken () {
-  localStorage.removeItem("token")
+function clearToken() {
+  localStorage.removeItem("token");
 }
 
 const isActiveDarkMode = ref(false);
 
 function setDarkMode(val) {
+  localStorage.setItem("darkMode", val);
   $q.dark.set(val);
 }
+
+onMounted(() => {
+  const theme = localStorage.getItem("darkMode");
+  if (theme === "true") {
+    isActiveDarkMode.value = true;
+  } else isActiveDarkMode.value = false;
+});
 </script>

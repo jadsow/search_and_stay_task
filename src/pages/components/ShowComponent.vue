@@ -48,7 +48,7 @@ const data = computed(() => {
   return useShowStore().dataShow;
 });
 
-async function Show() {
+async function show() {
   try {
     loading.value = true;
     const { data } = await ListApi.show(id);
@@ -60,7 +60,7 @@ async function Show() {
 }
 
 onMounted(() => {
-  Show();
+  show();
 });
 </script>
 <style></style>
